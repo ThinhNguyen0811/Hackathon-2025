@@ -1,0 +1,10 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: resource-request
+  datasource:
+    url: jdbc:postgresql://localhost:5500/resource
+    username: admin
+    password: admin

@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hackathon-2025 (Frontend) Environment Setup
 
-## Getting Started
+This guide provides instructions for configuring environment variables on the frontend.
 
-First, run the development server:
+## Prerequisites
+- Ensure you have [Node.js](https://nodejs.org/) installed (Recommended: LTS version)
+- Install [Yarn](https://yarnpkg.com/) or use `npm`
+- Clone the repository and navigate to the project folder
 
-```bash
-npm run dev
+## Setup Environment Variables
+
+1. Create a `.env.local` file in the root directory of your Next.js project.
+2. Add the following environment variables:
+
+```env
+NEXT_PUBLIC_EMPINFO_API=""
+NEXT_PUBLIC_INSIDER_API=""
+NEXT_PUBLIC_TOKEN=""
+NEXT_PUBLIC_AI_ENDPOINT=""
+```
+3. Replace the empty values ("") with the appropriate values.
+
+## Install Dependencies
+Run the following command to install the necessary dependencies:
+
+```env
+yarn install
 # or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Start Development Server
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Run the development server with:
+```env
+yarn dev
+# or
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application will be available at http://localhost:3000/ by default.
 
-## Learn More
+## Build and Run Production
+To build and run the application in production mode:
+```env
+yarn build && yarn start
+# or
+npm run build && npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Notes
+- Environment variables prefixed with NEXT_PUBLIC_ are exposed to the browser. 
+- Ensure sensitive information is not exposed through NEXT_PUBLIC_ variables.

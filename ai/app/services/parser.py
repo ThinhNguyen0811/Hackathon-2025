@@ -34,7 +34,7 @@ class RequirementsParserService:
     def __init__(self):
         """Initialize the parser service."""
         self.llm = ChatOpenAI(
-            model="gpt-4o-mini", temperature=0.1, api_key=settings.OPENAI_API_KEY
+            model="gpt-4o", temperature=0.1, api_key=settings.OPENAI_API_KEY
         )
         self.parser = PydanticOutputParser(pydantic_object=ParsedProjectRequirement)
 

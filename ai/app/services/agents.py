@@ -162,7 +162,7 @@ class RequirementAnalyzer:
 
 class EmployeeAnalyzer:
     def __init__(self):
-        self.llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.1)
+        self.llm = ChatOpenAI(model="gpt-4o", temperature=0.1)
         self.parser = JsonOutputParser()
 
         self.analysis_prompt = ChatPromptTemplate.from_messages(
@@ -495,7 +495,7 @@ class EmployeeAnalyzer:
 
 class MatchingAgent:
     def __init__(self):
-        self.llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.1)
+        self.llm = ChatOpenAI(model="gpt-4o", temperature=0.1)
         self.parser = JsonOutputParser()
 
         self.matching_prompt = ChatPromptTemplate.from_messages(
@@ -766,7 +766,7 @@ class MatchingAgent:
 
 class WorkloadOptimizer:
     def __init__(self):
-        self.llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.1)
+        self.llm = ChatOpenAI(model="gpt-4o", temperature=0.1)
 
     def optimize_workload(self, matches: List[Dict]) -> Dict:
         """Optimize workload distribution for project matches."""

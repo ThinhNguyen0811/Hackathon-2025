@@ -1,0 +1,17 @@
+fastapi>=0.95.0
+uvicorn>=0.22.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+langchain>=0.0.267
+langchain-openai>=0.0.1
+openai>=1.1.0
+requests>=2.28.2
+python-dotenv>=1.0.0
+tavily-python
+langchain-chroma
+pymupdf
+langgraph-supervisor
+python-dateutil>=2.8.2
+numpy>=1.24.0
+pandas>=2.0.0
+langchain-community

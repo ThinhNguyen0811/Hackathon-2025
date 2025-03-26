@@ -5,6 +5,10 @@ WORKDIR /app
 # Copy the project source code
 COPY . .
 
+# Fix line endings and make the Maven wrapper executable
+RUN chmod +x ./mvnw && \
+    sed -i 's/\r$//' ./mvnw
+
 # Build the application
 RUN ./mvnw clean package -DskipTests
 

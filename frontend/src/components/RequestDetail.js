@@ -251,14 +251,14 @@ const RequestDetail = (params) => {
                                 </td>
                                 <td className="px-6 py-4 text-gray-900 align-top">
                                     <div className="mb-1 min-h-10">
-                                        <textarea className="bg-gray-100 p-2 h-20" readOnly={true}>{resource.requirementNote}</textarea>
+                                        <textarea value={resource.requirementNote} readOnly className="bg-gray-100 p-2 h-20" />
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 text-gray-900 align-top">
                                     {
                                         resource.resourceAssignments.map((assignee, assigneeIndex) => (
                                             <div key={assigneeIndex} className="mb-1 h-20">
-                                                <input value={getUserEmpCode(assignee.assigneeId)} readOnly={true} className="bg-gray-50 p-2"/>
+                                                <input value={getUserEmpCode(assignee.assigneeId) || ''} readOnly={true} className="bg-gray-50 p-2"/>
                                             </div>
                                         ))
                                     }
@@ -276,7 +276,7 @@ const RequestDetail = (params) => {
                                     {
                                         resource.resourceAssignments.map((assignee, assigneeIndex) => (
                                             <div key={assigneeIndex} className="mb-1 min-h-10">
-                                                <textarea className="bg-gray-100 p-2 h-20" readOnly={true}>{assignee.note}</textarea>
+                                                <textarea value={assignee.note} className="bg-gray-100 p-2 h-20" readOnly />
                                             </div>
                                         ))
                                     }

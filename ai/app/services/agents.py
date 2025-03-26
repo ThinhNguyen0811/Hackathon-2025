@@ -393,30 +393,15 @@ class EmployeeAnalyzer:
             }
 
     def analyze_employees(self, employees: List[Employee]) -> List[Dict]:
-        """Analyze all employees in a single batch."""
+        """Analyze a batch of pre-filtered employees."""
         try:
-            # Skip employees with invalid primary skills
-            valid_employees = []
-            for employee in employees:
-                if not employee.skills or any(
-                    not skill.skillName or skill.skillName.lower() == "none"
-                    for skill in employee.skills
-                ):
-                    logger.info(
-                        f"Skipping employee {employee.empCode} due to invalid primary skills"
-                    )
-                    continue
-                valid_employees.append(employee)
-
-            if not valid_employees:
-                logger.warning("No valid employees to analyze")
-                return []
+            logger.info(f"Analyzing a batch of {len(employees)} pre-filtered employees")
 
             # Format all employee profiles at once
             profiles = []
             employee_additional_skills = {}  # Store additional skills for each employee
 
-            for employee in valid_employees:
+            for employee in employees:
                 profile = self._format_employee_profile(employee)
                 if profile:
                     # Extract additional skills
@@ -433,9 +418,42 @@ class EmployeeAnalyzer:
                     )
 
             if not profiles:
-                logger.warning("No valid profiles to analyze")
+                logger.warning("No valid profiles to format in this batch")
                 return []
 
+            # Check if batch is too large for LLM context
+            if len(profiles) > 50:
+                logger.warning(
+                    f"Batch size of {len(profiles)} profiles is too large. Splitting into smaller batches."
+                )
+                # Split into smaller batches of 25 employees each
+                all_results = []
+                for i in range(0, len(profiles), 25):
+                    sub_batch = profiles[i : i + 25]
+                    logger.info(
+                        f"Processing sub-batch {i//25 + 1} with {len(sub_batch)} employees"
+                    )
+                    sub_results = self._process_profile_batch(
+                        sub_batch, employee_additional_skills
+                    )
+                    all_results.extend(sub_results)
+                return all_results
+
+            # Process the batch if it's a reasonable size
+            return self._process_profile_batch(profiles, employee_additional_skills)
+
+        except Exception as e:
+            logger.error(f"Error in batch employee analysis: {str(e)}")
+            import traceback
+
+            logger.error(traceback.format_exc())
+            return []
+
+    def _process_profile_batch(
+        self, profiles: List[Dict], employee_additional_skills: Dict
+    ) -> List[Dict]:
+        """Process a batch of employee profiles with the LLM."""
+        try:
             # Combine all profiles into a single prompt
             combined_profiles = (
                 "\n\n=== EMPLOYEE PROFILES ===\n\n"
@@ -486,10 +504,16 @@ class EmployeeAnalyzer:
                 }
                 formatted_analyses.append(formatted_analysis)
 
+            logger.info(
+                f"Successfully analyzed {len(formatted_analyses)} employees in this batch"
+            )
             return formatted_analyses
 
         except Exception as e:
-            logger.error(f"Error in batch employee analysis: {str(e)}")
+            logger.error(f"Error processing profile batch: {str(e)}")
+            import traceback
+
+            logger.error(traceback.format_exc())
             return []
 
 

@@ -40,7 +40,7 @@ const RequestDetail = (params) => {
                     "ngrok-skip-browser-warning": 1,
                 },
                 body: JSON.stringify({
-                    description: "We need to develop a modern e-commerce platform for a fashion retailer. The website should be built using React for the frontend, with Node.js and Express for the backend API. We'll need MongoDB for the database to store product catalogs and user information. The site needs to integrate with payment gateways like Stripe and PayPal. We're looking for a senior developer who understands retail and e-commerce. The project starts on August 30, 2015.",
+                    description: "We need to develop a modern e-commerce platform for a fashion retailer. The website should be built using React JS for the frontend, with Node.js. We're looking for a senior developer who understands retail and e-commerce. The project starts on March 25, 2025.",
                 }),
             });
             const result = await response.json();

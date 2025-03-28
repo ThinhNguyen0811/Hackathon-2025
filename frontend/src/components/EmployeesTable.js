@@ -18,7 +18,7 @@ export default function EmployeesTable() {
             const response = await fetch(apiUrl, {
                 method: "GET",
                 headers: {
-                    "Authorization": "Bearer " + process.env.NEXT_PUBLIC_TOKEN,
+                    "Authorization": "Bearer " + process.env.NEXT_PUBLIC_TOKEN_EMPINFO,
                     "Content-Type": "application/json",
                 }
             });

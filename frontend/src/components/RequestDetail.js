@@ -14,23 +14,21 @@ const RequestDetail = (params) => {
     const [matchedResources, setMatchedResources] = useState([]);
     const [users, setUsers] = useState([]);
 
-    const handleSuggestMe = async () => {
+    const handleSuggestMe = async (resource) => {
+
         setSuggestLoading(true);
         try {
             const apiUrl = `${process.env.NEXT_PUBLIC_AI_ENDPOINT}/api/match`;
             let description = request.requestNote;
-            for(const r in request.resourceDetails) {
-                const resource = request.resourceDetails[r]
-                const additionSkills = resource.additionalSkills.map((skill) => {
-                    return skill.skillName;
-                })
-                description += `\n Need ${resource.requestedQuantity} ${resource.primarySkillName}`
-                if (additionSkills.length) {
-                    description += ` with additional skills: ${additionSkills}`;
-                }
-                if (resource.requirementNote) {
-                    description += ` and note: ${resource.requirementNote}`;
-                }
+            const additionSkills = resource.additionalSkills.map((skill) => {
+                return skill.skillName;
+            })
+            description += `\n Need ${resource.requestedQuantity} ${resource.primarySkillName}`
+            if (additionSkills.length) {
+                description += ` with additional skills: ${additionSkills}`;
+            }
+            if (resource.requirementNote) {
+                description += ` and note: ${resource.requirementNote}`;
             }
 
             const response = await fetch(apiUrl, {
@@ -40,7 +38,7 @@ const RequestDetail = (params) => {
                     "ngrok-skip-browser-warning": 1,
                 },
                 body: JSON.stringify({
-                    description: "We need to develop a modern e-commerce platform for a fashion retailer. The website should be built using React JS for the frontend, with Node.js. We're looking for a senior developer who understands retail and e-commerce. The project starts on March 25, 2025.",
+                    description: description,
                 }),
             });
             const result = await response.json();
@@ -222,6 +220,7 @@ const RequestDetail = (params) => {
                             <th scope="col" className="px-6 py-3">
                                 Status
                             </th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -290,20 +289,18 @@ const RequestDetail = (params) => {
                                         ))
                                     }
                                 </td>
+                                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap align-top">
+                                    <button onClick={() => handleSuggestMe(resource)}
+                                            className="text-white bg-lime-600 hover:bg-lime-700 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer whitespace-nowrap">
+                                        Suggest me
+                                    </button>
+                                </td>
                             </tr>
                         ))}
 
                         </tbody>
                     </table>
                 </div>
-            </div>
-
-            {/* Suggest Button */}
-            <div className="mt-6 text-right">
-                <button onClick={handleSuggestMe}
-                        className="text-white bg-lime-600 hover:bg-lime-700 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">
-                    Suggest me
-                </button>
             </div>
 
             {suggestLoading && <div role="status" className="text-center">
@@ -320,7 +317,7 @@ const RequestDetail = (params) => {
                 <span className="sr-only">Loading...</span>
             </div>}
 
-            {suggestError && <div className="text-base text-center leading-normal">{suggestError}</div>}
+            {suggestError && <div className="text-base text-center leading-normal py-4">{suggestError}</div>}
 
             {/* Matched Resources Display */}
             {!suggestLoading && matchedResources.length > 0 && (

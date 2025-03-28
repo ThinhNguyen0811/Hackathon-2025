@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 
 export default function EmployeesTable() {
+    const [loading, setLoading] = useState(true);
+
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
 
@@ -25,6 +27,7 @@ export default function EmployeesTable() {
             const result = await response.json();
             setData(result.employees);
             setFilteredData(result.employees);
+            setLoading(false)
         };
         fetchData();
     }, []);
@@ -59,6 +62,8 @@ export default function EmployeesTable() {
         }
         return pages;
     };
+
+    if (loading) return <p>Loading...</p>;
 
     return (
         <>

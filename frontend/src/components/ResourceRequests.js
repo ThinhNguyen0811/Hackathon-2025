@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function ResourceRequests() {
+    const [loading, setLoading] = useState(true);
+
     const [data, setData] = useState([]);
     const [totalRecords, setTotalRecords] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -44,6 +46,7 @@ export default function ResourceRequests() {
             const result = await response.json();
             setData(result.result);
             setTotalRecords(result.total);
+            setLoading(false)
         };
         fetchData();
     }, [currentPage, search]);
@@ -75,11 +78,10 @@ export default function ResourceRequests() {
         }).format(date);
     };
 
+    if (loading) return <p>Loading...</p>;
+
     return (
         <>
-            <h1 className="text-2xl font-bold flex items-center mb-4">
-                Resource Requests
-            </h1>
             <div className="flex space-x-4 mb-4">
                 <input type="text" placeholder="Request ID" onChange={(e) => setSearch(e.target.value)} value={search}
                        className="w-1/4 block rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-lime-600 sm:text-sm/6" />

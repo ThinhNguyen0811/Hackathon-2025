@@ -22,7 +22,8 @@ class Settings(BaseSettings):
 
     URL_INSIDER: Optional[str] = os.getenv("URL_INSIDER")
     URL_EMPINFO: Optional[str] = os.getenv("URL_EMPINFO")
-    BEARER_TOKEN: Optional[str] = os.getenv("BEARER_TOKEN")
+    INSIDER_BEARER_TOKEN: Optional[str] = os.getenv("INSIDER_BEARER_TOKEN")
+    EMP_INFO_TOKEN: Optional[str] = os.getenv("EMP_INFO_TOKEN")
     
     # Logging
     LOG_LEVEL: str = "INFO"
